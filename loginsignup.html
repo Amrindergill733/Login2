@@ -1,0 +1,198 @@
+<?php
+$db = mysqli_connect('localhost', 'root', '', 'webmafiyacpp') or die("Database ia not connected !");
+session_start();
+if (isset($_SESSION['username'])) {
+    $password = $_SESSION["password"];
+    $email = $_SESSION["username"];
+    
+    $sql = "select * from  loginsignup where ( username='$email' OR email = '$email') and password='$password' 'COLLATE SQL_Latin2_Genral_CP1_CS_AS' ";
+
+    $result = mysqli_query($db, $sql);
+
+
+    if ($result) {
+        $num = mysqli_num_rows($result);
+        if ($num == 1) {
+            
+        }
+    }
+}
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/bootstrap.css" />
+    <link rel="stylesheet" href="css/webmafiyacpp.css" />
+    <link rel="stylesheet" href="log.css" />
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <script
+      src="https://kit.fontawesome.com/6ef1dee2ed.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oswald&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>ContestPage</title>
+    <?php
+
+    ?>
+  </head>
+
+  <body>
+    <div class="form-modal">
+      <div class="form-toggle">
+        <button id="login-toggle" onclick="toggleLogin()">log in</button>
+        <button id="signup-toggle" onclick="toggleSignup()">sign up</button>
+      </div>
+
+      <div id="login-form">
+        <form method="post" action="submit.php">
+          <input
+            type="text"
+            name="Vehicle"
+            required
+            placeholder="Enter Vehicle no."
+          />
+          <input
+            type="password"
+            name="password"
+            required
+            placeholder="Enter password"
+          />
+          <button type="submit" name="loginform" class="btn login">
+            login
+          </button>
+          <p><a href="javascript:void(0)">Forgotten password</a></p>
+        </form>
+      </div>
+
+      <div id="signup-form">
+        <form action="" method="post">
+          <input
+            type="text"
+            name="Vehicle"
+            required
+            placeholder="Enter Vehicle no."
+          />
+
+          <!--<input type="submit" name="signupForm" class="btn signup">-->
+          <button type="submit" name="signupForm" class="btn signup">
+            Create Account
+          </button>
+          <p>
+            Clicking <strong>create account</strong> means that you are agree to
+            our <a href="javascript:void(0)">terms of services</a>.
+          </p>
+          <hr />
+        </form>
+      </div>
+    </div>
+    <div class="container">
+      <header>
+        <i class="bx bxs-check-shield"></i>
+      </header>
+      <h4>Enter OTP Code</h4>
+      <form action="#">
+        <div class="input-field">
+          <input type="number" />
+          <input type="number" disabled />
+          <input type="number" disabled />
+          <input type="number" disabled />
+        </div>
+        <button>Verify OTP</button>
+      </form>
+    </div>
+    <script>
+      const inputs = document.querySelectorAll("input"),
+        button = document.querySelector("button");
+      // iterate over all inputs
+      inputs.forEach((input, index1) => {
+        input.addEventListener("keyup", (e) => {
+          // This code gets the current input element and stores it in the currentInput variable
+          // This code gets the next sibling element of the current input element and stores it in the nextInput variable
+          // This code gets the previous sibling element of the current input element and stores it in the prevInput variable
+          const currentInput = input,
+            nextInput = input.nextElementSibling,
+            prevInput = input.previousElementSibling;
+          // if the value has more than one character then clear it
+          if (currentInput.value.length > 1) {
+            currentInput.value = "";
+            return;
+          }
+          // if the next input is disabled and the current value is not empty
+          //  enable the next input and focus on it
+          if (
+            nextInput &&
+            nextInput.hasAttribute("disabled") &&
+            currentInput.value !== ""
+          ) {
+            nextInput.removeAttribute("disabled");
+            nextInput.focus();
+          }
+          // if the backspace key is pressed
+          if (e.key === "Backspace") {
+            // iterate over all inputs again
+            inputs.forEach((input, index2) => {
+              // if the index1 of the current input is less than or equal to the index2 of the input in the outer loop
+              // and the previous element exists, set the disabled attribute on the input and focus on the previous element
+              if (index1 <= index2 && prevInput) {
+                input.setAttribute("disabled", true);
+                input.value = "";
+                prevInput.focus();
+              }
+            });
+          }
+          //if the fourth input( which index number is 3) is not empty and has not disable attribute then
+          //add active class if not then remove the active class.
+          if (!inputs[3].disabled && inputs[3].value !== "") {
+            button.classList.add("active");
+            return;
+          }
+          button.classList.remove("active");
+        });
+      });
+      //focus the first input which index is 0 on window load
+      window.addEventListener("load", () => inputs[0].focus());
+    </script>
+
+    <script>
+      function toggleSignup() {
+        document.getElementById("login-toggle").style.backgroundColor = "#fff";
+        document.getElementById("login-toggle").style.color = "#222";
+        document.getElementById("signup-toggle").style.backgroundColor =
+          "#7e07e0B7";
+        document.getElementById("signup-toggle").style.color = "#fff";
+        document.getElementById("login-form").style.display = "none";
+        document.getElementById("signup-form").style.display = "block";
+      }
+
+      function toggleLogin() {
+        document.getElementById("login-toggle").style.backgroundColor =
+          "#7e07e0B7";
+        document.getElementById("login-toggle").style.color = "#fff";
+        document.getElementById("signup-toggle").style.backgroundColor = "#fff";
+        document.getElementById("signup-toggle").style.color = "#222";
+        document.getElementById("signup-form").style.display = "none";
+        document.getElementById("login-form").style.display = "block";
+      }
+    </script>
+    <?php
+
+
+
+    ?>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

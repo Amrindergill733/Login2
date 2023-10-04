@@ -1,0 +1,40 @@
+body {
+    margin: 1px;
+}
+
+.navbar {
+    width: 100%;
+}
+
+.box {
+    width: 100%;
+    border: 2px solid black;
+    height: 500px;
+}
+
+.info {
+    display: flex;
+
+
+
+}
+
+
+.information,
+.info_photo {
+    border: 2px solid black;
+}
+
+.information {
+    width: 70%;
+}
+
+.info_photo {
+    width: 30%;
+}
+
+.video {
+
+    width: 60%;
+    margin-left: 20%;
+}
